@@ -1,0 +1,39 @@
+// Зарегистрировать нового пользователя
+"POST", "http://localhost:8000/auth/users/",
+{
+    "username": "petrov",
+    "password": "1234567*",
+    "first_name": "Петр",
+    "last_name": "Петров",
+    "patronymic_name": "Петрович",
+    "passport": "12 32 548596"
+}
+
+
+// Получить список всех пользователей
+"GET", "http://localhost:8000/auth/users/"
+
+
+// Войти в систему (получить токен)
+"GET", "http://localhost:8000/auth/token/login/",
+{
+    "username": "petrov",
+    "password": "1234567*"
+}
+
+// Создать, изменить, удалить группу, получить список групп
+"GET", "POST", "PUT", "DELETE" "http://localhost:8000/api/v1/groups",
+{
+    "name": "PlastTech_22_1_1",
+    "faculty": 3
+}
+
+// Массовое внесение студентов в группу
+{
+    "group": 1,
+    "students": [3, 4, 5, 6]
+}
+
+// Получить отчеты  (только для администратор)
+"GET" "http://localhost:8000/api/v1/report_groups "
+"GET" "http://localhost:8000/api/v1/report"
