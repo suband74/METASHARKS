@@ -12,12 +12,18 @@ from studies.tasks import report, report_2
 
 
 class StudentsApiView(APIView):
+    """
+    Получить список всех студентов
+    """
     def get(self, request):
         qs = User.objects.filter(roles__icontains="STUDENT").values()
         return Response({"students": StudentSrlz(qs, many=True).data})
 
 
 class MassComplectationGroup(APIView):
+    """
+    Зачислить сразу несколько студентов в группу
+    """
     def post(self, request):
         data = request.data
         possible_number = 20 - Student.objects.filter(group=data["group"]).count()
@@ -60,12 +66,18 @@ class CustomCreateModelMixin:
 
 
 class GroupOperationsViewSet(ModelViewSet):
+    """
+    CRUD студенческой группы
+    """
     queryset = EducationGroups.objects.all()
     serializer_class = EducationGroupsSrlz
     permission_classes = [IsCurator]
 
 
 class FacultyApiView(APIView):
+    """
+    Получить список факультетов
+    """
     def get(self, request):
         qs = Faculty.objects.all()
         return Response({"faculty": FacultySrlz(qs, many=True).data})
@@ -77,11 +89,17 @@ class StudentViewSet(CustomCreateModelMixin,
                    mixins.DestroyModelMixin,
                    mixins.ListModelMixin,
                    GenericViewSet):
+    """
+    CRUD студентов
+    """
     queryset = Student.objects.all()
     serializer_class = StudentSrlz
     permission_classes = [IsCurator]
 
 class Report(APIView):
+    """
+    Генерация отчета
+    """
     permission_classes = [IsAdmin]
     def get(self, request):
         report.delay()
@@ -89,6 +107,9 @@ class Report(APIView):
 
 
 class ReportGroups(APIView):
+    """
+    Генерация отчета
+    """
     permission_classes = [IsAdmin]
     def get(self, request):
         report_2.delay()
