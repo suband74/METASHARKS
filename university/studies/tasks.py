@@ -1,4 +1,5 @@
 from openpyxl import Workbook
+from openpyxl.styles import Font, Border, Side
 from django.utils import timezone
 from university.celery import app
 from studies.models import Faculty, Student, EducationGroups
@@ -15,9 +16,25 @@ def report():
     wb = Workbook()
     ws = wb.active
 
+# оформление таблицы
+
+    thin = Side(border_style="thin", color="000000")
+    double = Side(border_style="double", color="000000")
+
+    ft = Font(color="FF0000", size=14)
+    br_top = Border(top=double, left=double, right=double, bottom=double)
+    br = Border(top=thin, left=double, right=double, bottom=thin)
+
+    for column in range(1, 4):
+        cell = ws.cell(1, column)
+        cell.font = ft
+        cell.border = br_top
+
     ws.column_dimensions["A"].width = 60
     ws.column_dimensions["B"].width = 60
     ws.column_dimensions["C"].width = 60
+
+# заполнение таблицы
 
     ws.cell(row=1, column=1, value="Направление")
     ws.cell(row=1, column=2, value="Куратор")
@@ -36,6 +53,15 @@ def report():
             k += 1
         rn += max(3, k) + 1
 
+# оформление таблицы
+
+    for row in range(2, rn-1):
+        for column in range(1, 4):
+            cell = ws.cell(row, column)
+            cell.border = br
+
+############################################################################
+
     filename = "Report{}.xls".format(timezone.now())
     wb.save(filename)
 
@@ -47,11 +73,28 @@ def report_2():
     wb = Workbook()
     ws = wb.active
 
+# оформление таблицы
+
     ws.column_dimensions["A"].width = 30
     ws.column_dimensions["B"].width = 30
     ws.column_dimensions["C"].width = 30
     ws.column_dimensions["D"].width = 30
     ws.column_dimensions["E"].width = 30
+
+
+    thin = Side(border_style="thin", color="000000")
+    double = Side(border_style="double", color="000000")
+
+    ft = Font(color="FF0000", size=14)
+    br_top = Border(top=double, left=double, right=double, bottom=double)
+    br = Border(top=thin, left=double, right=double, bottom=thin)
+
+    for column in range(1, 6):
+        cell = ws.cell(1, column)
+        cell.font = ft
+        cell.border = br_top
+
+# заполнение таблицы
 
     ws.cell(row=1, column=1, value="Группа")
     ws.cell(row=1, column=2, value="Список студентов")
@@ -82,6 +125,15 @@ def report_2():
         ws.cell(row=rn, column=5, value=20-m-f)
 
         rn += max(1, k) + 1
+
+# оформление таблицы
+
+    for row in range(2, rn-1):
+        for column in range(1, 6):
+            cell = ws.cell(row, column)
+            cell.border = br
+
+#######################################################
 
     filename = "Report_groups{}.xls".format(timezone.now())
     wb.save(filename)
