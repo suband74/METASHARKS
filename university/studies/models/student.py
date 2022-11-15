@@ -15,6 +15,11 @@ class Student(models.Model):
         verbose_name="Группа",
         related_name="edu_group",
     )
+    email = models.CharField(
+        max_length=120,
+        verbose_name="Электронная почта",
+        default="test@test.mail.ru"
+    )
     class Meta:
         verbose_name = "Студент"
         verbose_name_plural = "Студенты"

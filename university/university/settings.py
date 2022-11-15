@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -144,50 +148,37 @@ DJOSER = {
     "HIDE_USERS": False,
     "PERMISSIONS": {
         "user_create": [
-            # "studies.permissions_user.IsCurator"
-            # "studies.permissions_user.IsAdmin"
-            # "rest_framework.permissions.IsAdminUser"
             "studies.permissions_user.IsAdminOrCurator"
         ],
         "activation": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "password_reset": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "password_reset_confirm": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "set_password": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+           "studies.permissions_user.IsAdminOrCurator",
         ],
         "username_reset": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "username_reset_confirm": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "set_username": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "user_delete": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "user": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
         "user_list": [
-            "studies.permissions_user.IsAdmin" or
-            "studies.permissions_user.IsCurator",
+            "studies.permissions_user.IsAdminOrCurator",
             
         ],
         "token_create": [
@@ -196,8 +187,7 @@ DJOSER = {
             # "studies.permissions_user.IsCurator"
         ],
         "token_destroy": [
-            "studies.permissions_user.IsCurator" or
-            "studies.permissions_user.IsAdmin",
+            "studies.permissions_user.IsAdminOrCurator",
         ],
     },
 }
@@ -207,3 +197,10 @@ CELERY_RESULT_BACKEND = "redis://redis:6379"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
+EMAIL_HOST = "smtp.yandex.ru"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True

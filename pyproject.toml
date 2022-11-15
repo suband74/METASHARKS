@@ -16,6 +16,7 @@ openpyxl = "^3.0.10"
 celery = "^5.2.7"
 redis = "^4.3.4"
 flower = "^1.2.0"
+python-dotenv = "^0.21.0"
 
 
 [tool.poetry.group.dev.dependencies]

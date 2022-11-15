@@ -3,6 +3,20 @@ from openpyxl.styles import Font, Border, Side
 from django.utils import timezone
 from university.celery import app
 from studies.models import Faculty, Student, EducationGroups
+from django.core.mail import EmailMessage
+
+
+@app.task(name="CreateStudents")
+def send_email_students_created(subject, from_email, to, body):
+    msg = EmailMessage(
+        subject=subject,
+        from_email=from_email,
+        to=to,
+        body=body,
+    )
+    msg.send(fail_silently=True)
+
+    return None
 
 
 @app.task(name="Report")
